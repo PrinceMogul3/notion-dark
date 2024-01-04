@@ -13,10 +13,12 @@
     
     <!-- Custom Styles for Dark Mode and Rounded Corners -->
     <style>
+        body, input, textarea, label, .btn-theme {
+            transition: background-color 0.3s, color 0.3s, border 0.3s;
+        }
         body {
             background-color: #191919; /* Dark Mode by default */
             color: #ffffff;
-            transition: background-color 0.3s, color 0.3s;
         }
         .form-control, .btn, .form-check-input, .form-check-label {
             border-radius: 10px;
@@ -25,7 +27,7 @@
         .container {
             max-width: 600px; /* Adjust for minimal width */
         }
-        label, .btn-theme {
+        label {
             color: #ffffff;
         }
         .form-control {
@@ -41,7 +43,7 @@
         .btn-theme {
             background-color: #191919;
             border: none;
-            transition: background-color 0.3s;
+            border-radius: 10px; /* Rounded corners for the button */
         }
     </style>
 
@@ -87,22 +89,24 @@
             if (document.body.style.backgroundColor === "white") {
                 document.body.style.backgroundColor = "#191919";
                 document.body.style.color = "white";
-                Array.from(document.querySelectorAll(".form-control, label, .btn-theme")).forEach(function(el) {
-                    el.style.backgroundColor = "#191919";
-                    el.style.color = "white";
-                    el.style.borderColor = "white";
-                });
+                themeButton.style.backgroundColor = "#191919";
                 themeButton.textContent = "Dark";
+                updateFormElements("#191919", "white");
             } else {
                 document.body.style.backgroundColor = "white";
                 document.body.style.color = "black";
-                Array.from(document.querySelectorAll(".form-control, label, .btn-theme")).forEach(function(el) {
-                    el.style.backgroundColor = "white";
-                    el.style.color = "black";
-                    el.style.borderColor = "black";
-                });
+                themeButton.style.backgroundColor = "white";
                 themeButton.textContent = "Light";
+                updateFormElements("white", "black");
             }
+        }
+
+        function updateFormElements(bgColor, textColor) {
+            Array.from(document.querySelectorAll(".form-control, label")).forEach(function(el) {
+                el.style.backgroundColor = bgColor;
+                el.style.color = textColor;
+                el.style.borderColor = textColor;
+            });
         }
 
         var password = document.getElementById("password");
@@ -119,7 +123,6 @@
             } else if (option && option.id === "optionDecrypt") {
                 result.innerHTML = decrypt(text.value);
             }
-            // Trigger animation for result box
             result.style.maxHeight = result.scrollHeight + "px";
         }
 
