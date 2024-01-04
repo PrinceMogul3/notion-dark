@@ -71,6 +71,7 @@
         <div>
             <button id="go" type="button" class="btn btn-primary">Generate Text</button>
             <button onclick="copy()" type="button" class="btn btn-success ml-4">Copy to Clipboard</button>
+            <button onclick="clearResult()" type="button" class="btn btn-secondary ml-4">Clear Result</button>
         </div>
         <h1 class="mt-1">Result</h1>
         <div id="result" style='white-space:pre'></div>
@@ -121,6 +122,11 @@
             }
             navigator.clipboard.writeText(result.innerHTML);
         }
+
+        const clearResult = () => {
+            result.innerHTML = '';
+            result.style.maxHeight = null;
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
@@ -128,3 +134,4 @@
             crossorigin="anonymous"></script>
 </body>
 </html>
+
