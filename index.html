@@ -25,7 +25,12 @@
         .container {
             max-width: 600px; /* Adjust for minimal width */
         }
-        label {
+        label, .btn-theme {
+            color: #ffffff;
+        }
+        .form-control {
+            background-color: #191919;
+            border: 1px solid #ffffff;
             color: #ffffff;
         }
         #result {
@@ -33,15 +38,10 @@
             overflow: hidden;
             transition: max-height 0.5s ease-out;
         }
-        .mode-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-        .mode-toggle label {
-            margin-left: 10px;
-            color: #ffffff; /* Default to white for dark mode */
+        .btn-theme {
+            background-color: #191919;
+            border: none;
+            transition: background-color 0.3s;
         }
     </style>
 
@@ -73,36 +73,37 @@
             <button id="go" type="button" class="btn btn-primary">Generate Text</button>
             <button onclick="copy()" type="button" class="btn btn-success ml-4">Copy to Clipboard</button>
             <button onclick="clearResult()" type="button" class="btn btn-secondary ml-4">Clear Result</button>
+            <button onclick="toggleTheme()" type="button" class="btn btn-theme ml-4">Dark</button>
         </div>
         <h1 class="mt-1">Result</h1>
         <div id="result" style='white-space:pre'></div>
-        
-        <!-- Mode Toggle at the Bottom -->
-        <div class="mode-toggle">
-            <input class="form-check-input" type="checkbox" id="modeToggle">
-            <label id="modeLabel" for="modeToggle">Dark</label>
-        </div>
     </div>
 
     <script>
-        var modeToggle = document.getElementById("modeToggle");
-        var modeLabel = document.getElementById("modeLabel");
-        modeToggle.checked = true; // Dark mode is default
+        var themeButton = document.getElementsByClassName("btn-theme")[0];
 
-        // Script for Toggle Switch
-        modeToggle.addEventListener('change', function() {
-            if(this.checked) {
+        // Script for Theme Button
+        function toggleTheme() {
+            if (document.body.style.backgroundColor === "white") {
                 document.body.style.backgroundColor = "#191919";
                 document.body.style.color = "white";
-                modeLabel.textContent = "Dark";
-                modeLabel.style.color = "white";
+                Array.from(document.querySelectorAll(".form-control, label, .btn-theme")).forEach(function(el) {
+                    el.style.backgroundColor = "#191919";
+                    el.style.color = "white";
+                    el.style.borderColor = "white";
+                });
+                themeButton.textContent = "Dark";
             } else {
                 document.body.style.backgroundColor = "white";
                 document.body.style.color = "black";
-                modeLabel.textContent = "Light";
-                modeLabel.style.color = "black";
+                Array.from(document.querySelectorAll(".form-control, label, .btn-theme")).forEach(function(el) {
+                    el.style.backgroundColor = "white";
+                    el.style.color = "black";
+                    el.style.borderColor = "black";
+                });
+                themeButton.textContent = "Light";
             }
-        });
+        }
 
         var password = document.getElementById("password");
         var text = document.getElementById("text");
